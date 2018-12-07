@@ -1,0 +1,49 @@
+C51 COMPILER V6.10  EX6                                                                    02/08/2017 14:33:01 PAGE 1   
+
+
+C51 COMPILER V6.10, COMPILATION OF MODULE EX6
+OBJECT MODULE PLACED IN ex6.OBJ
+COMPILER INVOKED BY: F:\51单片机工程软件\C51\BIN\C51.EXE ex6.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：数码管控制实验
+   3          * 实验目的：1.掌握数码管驱动电路的设计方法
+   4          *           2.掌握数码管显示的基本原理
+   5          * 程序说明：J13配置为MM模式时，通过存储器映射方式编程。
+   6          * 日期版本：2012-9-4/V1.0a 
+   7          *******************************************************************************/
+   8          
+   9          #include "reg52.h"  //定义51单片机特殊功能寄存器
+  10          #include "absacc.h"
+  11                                 
+  12          code unsigned char tab[] = {0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+  13          
+  14          //主函数
+  15          void main(void)
+  16          { 
+  17   1      //	unsigned char i;
+  18   1      
+  19   1      	XBYTE[0xC000] = 0xff;
+  20   1      //	XBYTE[0xE000] = tab[1];  //显示数值1
+  21   1      	
+  22   1          while(1)
+  23   1      	{
+  24   2      		;
+  25   2          }
+  26   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      8    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

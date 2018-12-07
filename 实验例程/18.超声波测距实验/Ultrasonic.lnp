@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"ex18.obj" 
+TO "Ultrasonic" 
+RAMSIZE(256) 

@@ -1,0 +1,62 @@
+C51 COMPILER V9.50a   EX2                                                                  10/23/2012 14:44:06 PAGE 1   
+
+
+C51 COMPILER V9.50a, COMPILATION OF MODULE EX2
+OBJECT MODULE PLACED IN ex2.OBJ
+COMPILER INVOKED BY: E:\Keil\C51\BIN\C51.EXE ex2.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：LED移位控制实验
+   3          * 实验目的：掌握单片机IO口操作的基本方法
+   4          * 程序说明：无
+   5          * 日期版本：2012-9-3/V1.0a 
+   6          *******************************************************************************/
+   7          
+   8          #include "reg52.h"  //定义51单片机特殊功能寄存器
+   9          #include "intrins.h"
+  10          
+  11          //延时函数
+  12          void delay(void)
+  13          {
+  14   1          unsigned char i,j,k;
+  15   1          for(i=0; i<10; i++)
+  16   1          {
+  17   2              for(j=0; j<20; j++)
+  18   2              {
+  19   3                  for(k=0; k<248; k++);
+  20   3              }
+  21   2          } 
+  22   1      }
+  23          
+  24          //主函数
+  25          void main(void)
+  26          {
+  27   1          unsigned char i;
+  28   1          
+  29   1          while(1)
+  30   1          {
+  31   2                      for(i=0; i<8; i++)
+  32   2                      {
+  33   3                              P2 = ((P2 &0x1f)|0x80);
+  34   3                              P0 = 0xfe<<i;  //左移i位
+  35   3                              P2 &= 0x1f;
+  36   3                              delay();
+  37   3                      }
+  38   2          }
+  39   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     54    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

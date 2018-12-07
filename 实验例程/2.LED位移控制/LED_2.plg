@@ -1,0 +1,16 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+F:\Jobs\产品资料\CT107D单片机综合训练平台\实验例程\2.LED位移控制\LED_2.uvproj
+Project File Date:  09/03/2012
+
+<h2>Output:</h2>
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling ex2.c...
+linking...
+Program Size: data=9.0 xdata=0 code=69
+creating hex file from "LED_2"...
+"LED_2" - 0 Error(s), 0 Warning(s).

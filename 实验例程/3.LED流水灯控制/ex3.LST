@@ -1,0 +1,62 @@
+C51 COMPILER V6.10  EX3                                                                    03/08/2017 17:43:49 PAGE 1   
+
+
+C51 COMPILER V6.10, COMPILATION OF MODULE EX3
+OBJECT MODULE PLACED IN ex3.OBJ
+COMPILER INVOKED BY: F:\51单片机工程软件\C51\BIN\C51.EXE ex3.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：LED流水灯控制实验
+   3          * 实验目的：掌握单片机IO口操作的基本方法
+   4          * 程序说明：无
+   5          * 日期版本：2012-9-3/V1.0a 
+   6          *******************************************************************************/
+   7          
+   8          #include "reg52.h"  //定义51单片机特殊功能寄存器
+   9          #include "intrins.h"
+  10          
+  11          //延时函数
+  12          void delay(void)
+  13          {
+  14   1          unsigned char i,j,k;
+  15   1          for(i=0; i<20; i++)
+  16   1          {
+  17   2              for(j=0; j<20; j++)
+  18   2              {
+  19   3                  for(k=0; k<248; k++);
+  20   3              }
+  21   2          } 
+  22   1      }
+  23          
+  24          //主函数
+  25          void main(void)
+  26          {
+  27   1          unsigned char i;
+  28   1          
+  29   1          while(1)
+  30   1          {
+  31   2      		for(i=0; i<8; i++)
+  32   2      		{
+  33   3      			P2 = ((P2&0x1f)|0x80);
+  34   3      			P0 = ~(0x01<<i);  //左移i位，按位取反
+  35   3      			P2 &= 0x1f;
+  36   3      			delay();
+  37   3      		}
+  38   2          }
+  39   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     55    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

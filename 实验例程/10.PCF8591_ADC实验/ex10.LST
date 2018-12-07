@@ -1,0 +1,116 @@
+C51 COMPILER V9.02   EX10                                                                  03/19/2018 23:19:16 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE EX10
+OBJECT MODULE PLACED IN ex10.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ex10.c BROWSE DEFINE(ADC_PCF8591) DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：ADC转换实验
+   3          * 实验目的：1.掌握I2C总线通讯基本特点和工作时序
+   4          *           2.掌握51单片机模拟I2C总线时序的程序设计方法
+   5          *           3.掌握PCF8591 ADC芯片的操作方法
+   6          * 程序说明：1.使用程序前在 Preprocessor Symbols 中增加宏定义ADC_PCF8591
+   7          *           2.调节电位器Rb2，观察数码管显示情况
+   8          * 日期版本：2012-9-5/V1.0a 
+   9          *******************************************************************************/
+  10          
+  11          #include "reg52.h"  //定义51单片机特殊功能寄存器
+  12          #include "i2c.h"    //I2C总线驱动库 
+  13          //#include "absacc.h"
+  14          
+  15          code unsigned char LedChar[] = { 0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,
+  16                                       0xff
+  17                                     };
+  18          unsigned char LedBuf[8] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff};  //显示缓冲区
+  19          unsigned char dspcom = 0;
+  20          unsigned char intr;
+  21          bit adc_flag;
+  22          
+  23          void Count(unsigned char val);
+  24          void LedScan();
+  25          
+  26          //主函数
+  27          void main(void)
+  28          { 
+  29   1          unsigned char val;  //ADC转换数据 
+  30   1                      
+  31   1          TMOD |= 0x01;  //配置定时器工作模式
+  32   1          TH0 = (65536-2000)/256;
+  33   1          TL0 = (65536-2000)%256;  
+  34   1          EA = 1;
+  35   1          ET0 = 1;  //打开定时器中断
+  36   1          TR0 = 1;  //启动定时器
+  37   1      
+  38   1              init_pcf8591();  //PCF8591初始化      
+  39   1          
+  40   1          while(1)
+  41   1          {
+  42   2                      if(adc_flag)
+  43   2                      {
+  44   3                              adc_flag = 0;
+  45   3                              val = adc_pcf8591();
+  46   3                              Count(val); 
+  47   3                      }
+  48   2          }
+  49   1      }
+  50          
+  51          //定时器中断服务函数
+  52          void isr_timer_0(void)  interrupt 1  //默认中断优先级 1
+  53          {
+  54   1          TH0 = (65536-2000)/256;
+  55   1          TL0 = (65536-2000)%256;  //定时器重载 
+C51 COMPILER V9.02   EX10                                                                  03/19/2018 23:19:16 PAGE 2   
+
+  56   1          if(++intr == 50)
+  57   1              {
+  58   2                      intr = 0;
+  59   2                      adc_flag = 1;
+  60   2              } 
+  61   1          LedScan();
+  62   1      }
+  63          
+  64          void Count(unsigned char val)
+  65          {
+  66   1              unsigned char buf[8],i;
+  67   1              buf[0] = val/100%10;
+  68   1              buf[1] = val/10%10;
+  69   1              buf[2] = val%10;
+  70   1      
+  71   1              for(i=0; i<3; i++)
+  72   1              {
+  73   2                      LedBuf[i] = LedChar[buf[i]];
+  74   2              }
+  75   1              LedBuf[0] &= 0x7f;       //加小数点
+  76   1      }  
+  77          
+  78          void LedScan()
+  79          {
+  80   1              static unsigned char i = 0;
+  81   1      
+  82   1              P2 = (P2&0x1f)|0xc0;
+  83   1              P0 = 0x01 << i; 
+  84   1              P2 = (P2&0x1f)|0xe0;
+  85   1              P0 = LedBuf[i];
+  86   1      
+  87   1              if(i < 8)
+  88   1                      i++;
+  89   1              else
+  90   1                      i = 0;
+  91   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    221    ----
+   CONSTANT SIZE    =     11    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     11       9
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

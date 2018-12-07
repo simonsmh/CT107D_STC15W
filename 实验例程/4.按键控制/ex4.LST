@@ -1,0 +1,74 @@
+C51 COMPILER V9.02   EX4                                                                   02/02/2015 16:03:32 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE EX4
+OBJECT MODULE PLACED IN ex4.OBJ
+COMPILER INVOKED BY: F:\danpianji\C51\BIN\C51.EXE ex4.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：按键控制实验
+   3          * 实验目的：1.掌握单片机IO口操作的基本方法
+   4          *           2.掌握C51关键字"sbit"的用法
+   5          *           2.掌握单片机常见外围驱动电路的设计方法 
+   6          * 程序说明：使用程序前，将跳线J2调整为BTN模式
+   7          * 日期版本：2012-9-3/V1.0a 
+   8          *******************************************************************************/
+   9          
+  10          #include "reg52.h"  //定义51单片机特殊功能寄存器
+  11          
+  12          /** 独立按键接口 */
+  13          sbit S7  = P3^0;
+  14          sbit S6  = P3^1;
+  15          sbit S5  = P3^2;
+  16          sbit S4  = P3^3;
+  17          sbit a = P0^6;
+  18          //主函数
+  19          void main(void)
+  20          {    
+  21   1          while(1)
+  22   1          {
+  23   2              if(S7 == 0)
+  24   2              {
+  25   3                  P2 = ((P2&0x1f)|0x80);
+  26   3                              P0 = 0xff;  //关闭所有LED
+  27   3                              P2 &= 0x1f;
+  28   3              }
+  29   2              if(S6 == 0)
+  30   2              {
+  31   3                  P2 = ((P2&0x1f)|0x80);
+  32   3                  P0 = 0x00;  //打开所有LED
+  33   3                              P2 &= 0x1f;
+  34   3              }
+  35   2              if(S5 == 0)
+  36   2              {
+  37   3                  P2 = ((P2&0x1f)|0xa0);
+  38   3                              P0 &= ~(0x01<<6);  //Close
+  39   3                              P2 &= 0x1f;
+  40   3              }
+  41   2              if(S4 == 1)
+  42   2              {
+  43   3                  P2 = ((P2&0x1f)|0xa0); //P2 = 0xBF;
+  44   3                              P0 |= (0x01<<6); //Open
+  45   3                              P2 &= 0x1f;
+  46   3              }
+  47   2      
+  48   2          }
+  49   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     70    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+C51 COMPILER V9.02   EX4                                                                   02/02/2015 16:03:32 PAGE 2   
+
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"ex16.obj" 
+TO "KEY_BOARD" 
+RAMSIZE(256) 

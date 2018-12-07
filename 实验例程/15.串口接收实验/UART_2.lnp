@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"ex15.obj" 
+TO "UART_2" 
+RAMSIZE(256) 

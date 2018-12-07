@@ -1,0 +1,173 @@
+C51 COMPILER V6.10  EX11                                                                   03/12/2017 11:11:53 PAGE 1   
+
+
+C51 COMPILER V6.10, COMPILATION OF MODULE EX11
+OBJECT MODULE PLACED IN ex11.OBJ
+COMPILER INVOKED BY: F:\51单片机工程软件\C51\BIN\C51.EXE ex11.c BROWSE DEFINE(DAC_PCF8591) DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：DAC转换实验
+   3          * 实验目的：1.掌握I2C总线通讯基本特点和工作时序
+   4          *           2.掌握51单片机模拟I2C总线时序的程序设计方法
+   5          *           3.掌握PCF8591 DAC操作方法
+   6          * 程序说明：1.使用程序前增加宏定义DAC_PCF8591
+   7          *           2.通过按键S1、S5控制PCF8591芯片输出模拟电压值，使用万用表测量排针J3
+   8                        的D/A引脚，与数码管显示数值进行比对，并尝试分析误差的产生原因。
+   9          			3.数码管显示电压值单位为毫伏(mV)
+  10          * 日期版本：2012-9-5/V1.0a 
+  11          *******************************************************************************/
+  12          
+  13          #include "reg52.h"  //定义51单片机特殊功能寄存器
+  14          #include "i2c.h"    //I2C总线驱动库
+  15          #include "absacc.h"
+  16          
+  17          #define VREF  4700  //PCF8591参考电压
+  18          
+  19          code unsigned char tab[] = { 0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90,
+  20                                       0xff
+  21                                     };
+  22          unsigned char dspbuf[8] = {10,10,10,10,0,0,0,0};  //显示缓冲区
+  23          unsigned char dspcom = 0;
+  24          bit key_re;
+  25          unsigned char key_press;
+  26          unsigned char key_value;
+  27          
+  28          bit key_flag;
+  29          unsigned char intr;
+  30          
+  31          void display(void);
+  32          unsigned char read_key(void);
+  33          
+  34          //主函数
+  35          void main(void)
+  36          { 
+  37   1          unsigned char key_temp;
+  38   1      	unsigned char dac_value;  //DAC转换数据
+  39   1      	unsigned int Vaout;  //输出电压
+  40   1          
+  41   1          TMOD |= 0x01;  //配置定时器工作模式
+  42   1          TH0 = (65536-2000)/256;
+  43   1          TL0 = (65536-2000)%256;  
+  44   1          EA = 1;
+  45   1          ET0 = 1;  //打开定时器中断
+  46   1          TR0 = 1;  //启动定时器   
+  47   1      	
+  48   1          while(1)
+  49   1          {
+  50   2              if(key_flag)
+  51   2              {
+  52   3                  key_flag = 0;
+  53   3                  key_temp = read_key();
+  54   3              }        
+  55   2              //进入按键处理程序部分
+C51 COMPILER V6.10  EX11                                                                   03/12/2017 11:11:53 PAGE 2   
+
+  56   2              switch(key_temp)
+  57   2              {
+  58   3                  case 1:
+  59   3                      dac_value++;
+  60   3      				dac_pcf8591(dac_value);				
+  61   3                      break;
+  62   3                  case 2:
+  63   3                      dac_value--;
+  64   3      				dac_pcf8591(dac_value);				
+  65   3                      break;      
+  66   3              }
+  67   2      		key_temp = 0;  //完成按键处理程序后，清除键值
+  68   2      		
+  69   2      		Vaout = VREF/255*dac_value;
+  70   2      				
+  71   2      		//显示数据更新
+  72   2      		dspbuf[4] = Vaout/1000;  //熄灭
+  73   2      		dspbuf[5] = Vaout%1000/100;       
+  74   2      		dspbuf[6] = Vaout%100/10;       
+  75   2      		dspbuf[7] = Vaout%10; 
+  76   2          }
+  77   1      }
+  78          
+  79          //定时器中断服务函数
+  80          void isr_timer_0(void)  interrupt 1  //默认中断优先级 1
+  81          {
+  82   1          TH0 = (65536-2000)/256;
+  83   1          TL0 = (65536-2000)%256;  //定时器重载  
+  84   1          display();
+  85   1      	if(++intr == 10)  //2ms执行一次
+  86   1      	{
+  87   2              intr = 0;
+  88   2      		key_flag = 1;  //20ms按键扫描标志位置1
+  89   2          }
+  90   1      }
+  91          
+  92          //显示函数
+  93          void display(void)
+  94          {   
+  95   1      	XBYTE[0xE000] = 0xff;  //消隐
+  96   1      	
+  97   1      	XBYTE[0xC000] = (1<<dspcom);
+  98   1          XBYTE[0xE000] = tab[dspbuf[dspcom]]; //段码
+  99   1         
+ 100   1          if(++dspcom == 8){
+ 101   2              dspcom = 0;
+ 102   2          }   
+ 103   1      }
+ 104          
+ 105          //读取键值
+ 106          unsigned char read_key(void)
+ 107          {
+ 108   1      	
+ 109   1          unsigned char key_temp;
+ 110   1          
+ 111   1      	key_temp = (P3&0x0f);
+ 112   1      	
+ 113   1          if(key_temp != 0x0f) //有按键按下
+ 114   1              key_press++;
+ 115   1      	else
+ 116   1      		key_press = 0;  //抖动
+ 117   1          
+C51 COMPILER V6.10  EX11                                                                   03/12/2017 11:11:53 PAGE 3   
+
+ 118   1          if(key_press == 5)
+ 119   1          {
+ 120   2      		key_press = 0;
+ 121   2      		key_re = 1;
+ 122   2      		switch(key_temp)
+ 123   2              {
+ 124   3                  case 0x0e:
+ 125   3                      key_value = 1;  //S1
+ 126   3                      break;                
+ 127   3                  case 0x0d:
+ 128   3                      key_value = 2;  //S5
+ 129   3                      break;    
+ 130   3                  case 0x0b:
+ 131   3                      key_value = 3;  //S9
+ 132   3                      break;    
+ 133   3                  case 0x07:
+ 134   3                      key_value = 4;  //S13
+ 135   3                      break;
+ 136   3              }
+ 137   2          }
+ 138   1          //连续三次检测到按键被按下，并且该按键已经释放
+ 139   1          if((key_re == 1) && (key_temp == 0x0f))
+ 140   1          {
+ 141   2              key_re = 0;
+ 142   2              return key_value;
+ 143   2          }
+ 144   1          
+ 145   1          return 0xff;  //无按键按下或被按下的按键未被释放    
+ 146   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    340    ----
+   CONSTANT SIZE    =     11    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     12       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,123 @@
+C51 COMPILER V9.02   EX15                                                                  02/04/2015 15:36:24 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE EX15
+OBJECT MODULE PLACED IN ex15.OBJ
+COMPILER INVOKED BY: F:\danpianji\C51\BIN\C51.EXE ex15.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：串口通讯实验
+   3          * 实验目的：1.掌握51单片机串口工作模式及相关寄存器配置方法
+   4          *           2.了解51单片机波特率的计算方法
+   5          *           3.掌握单片机串口接收中断服务函数的设计方法
+   6          * 程序说明：1.通过USB连接线连接PC机，在计算机硬件管理器中查看串口号
+   7          *           2.打开串口调试工具软件，并将串口通讯波特率设定为2400
+   8          *           3.通过串口调试工具输入命令:(x代表任意字符，字符串长度不要超过20)
+   9          *                1+xxxxxxx+回车:打开蜂鸣器
+  10          *                2+xxxxxxx+回车:关闭蜂鸣器
+  11          *                3+xxxxxxx+回车:打开继电器
+  12          *                4+xxxxxxx+回车:关闭继电器
+  13          * 日期版本：2012-9-5/V1.0a 
+  14          *******************************************************************************/
+  15          
+  16          #include "reg52.h"  //定义51单片机特殊功能寄存器
+  17          
+  18          #define BAUDRATE     2400  //波特率
+  19          #define SYSTEMCLOCK  12000000  //系统时钟频率
+  20          
+  21          sbit RELAY = P0^6;
+  22          sbit BUZZ = P0^4;
+  23          
+  24          unsigned char rxbuf[20];
+  25          unsigned char rxcnt;
+  26          bit rx_over = 0;  //命令接收完成标志位
+  27          
+  28          void proc_cmd(void);
+  29          
+  30          //主函数
+  31          void main(void)
+  32          { 
+  33   1      
+  34   1              SCON = 0x50;
+  35   1              TMOD |= 0x20;
+  36   1              TH1 = 256 - (unsigned int)(SYSTEMCLOCK/BAUDRATE/384+0.5); 
+  37   1              ES = 1;  //时能串口中断
+  38   1              EA = 1;
+  39   1              TR1 = 1;  //启动定时器1
+  40   1         
+  41   1          while(1)
+  42   1          {
+  43   2              if(rx_over)
+  44   2              {
+  45   3                  rx_over = 0;
+  46   3                  proc_cmd();
+  47   3                  ES = 1;  //命令处理完成后，打开串口
+  48   3              }
+  49   2          }
+  50   1      }
+  51          
+  52          //串口中断服务函数
+  53          void isr_uart(void) interrupt 4
+  54          {
+  55   1          if(RI)
+C51 COMPILER V9.02   EX15                                                                  02/04/2015 15:36:24 PAGE 2   
+
+  56   1          {
+  57   2              RI = 0;  //清除接收标志位 
+  58   2              rxbuf[rxcnt] = SBUF;
+  59   2              if(rxbuf[rxcnt] == '\n')
+  60   2              {
+  61   3                  rxcnt = 0;
+  62   3                  rx_over = 1;
+  63   3                  ES = 0;  //回车为接收结束标志，检测到回车符后，关闭串口中断
+  64   3              }      
+  65   2                      else
+  66   2                      {
+  67   3                              rxcnt++;
+  68   3                      }
+  69   2          }
+  70   1      }
+  71          
+  72          //串口接收命令处理函数
+  73          void proc_cmd(void)
+  74          {
+  75   1          switch(rxbuf[0])
+  76   1          {
+  77   2              case '1':
+  78   2                  P2 = ((P2&0x1f)|0xa0);
+  79   2                  P0 = 0x40;
+  80   2                  P2 = ((P2&0x1f)|0xa0);
+  81   2                  break;
+  82   2              case '2':
+  83   2                  P2 = ((P2&0x1f)|0xa0);
+  84   2                  P0 = 0x00;
+  85   2                  P2 = ((P2&0x1f)|0xa0);
+  86   2                  break;
+  87   2              case '3':
+  88   2                  P2 = ((P2&0x1f)|0xa0);
+  89   2                  P0 = 0x10;
+  90   2                  P2 = ((P2&0x1f)|0xa0);
+  91   2                  break;
+  92   2              case '4':
+  93   2                  P2 = ((P2&0x1f)|0xa0);
+  94   2                  P0 = 0x00;
+  95   2                  P2 = ((P2&0x1f)|0xa0);
+  96   2                  break;
+  97   2          }
+  98   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    137    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     21    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

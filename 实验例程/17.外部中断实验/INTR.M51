@@ -1,0 +1,148 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/13/2018  21:24:45  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+C:\KEIL\C51\BIN\BL51.EXE STARTUP.obj, ex17.obj TO INTR RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  ex17.obj (EX17)
+
+
+LINK MAP OF MODULE:  INTR (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0003H     ABSOLUTE     
+                    0006H     000DH                  *** GAP ***
+            CODE    0013H     0003H     ABSOLUTE     
+                    0016H     07EAH                  *** GAP ***
+            CODE    0800H     0012H     UNIT         ?PR?ISR_INTR_0?EX17
+            CODE    0812H     0012H     UNIT         ?PR?ISR_INTR_1?EX17
+            CODE    0824H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0830H     000CH     UNIT         ?PR?MAIN?EX17
+
+
+
+OVERLAY MAP OF MODULE:   INTR (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?EX17
+
+
+
+SYMBOL TABLE OF MODULE:  INTR (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:0824H         SEGMENT       ?C_C51STARTUP
+  I:0008H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/13/2018  21:24:45  PAGE 2
+
+
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0827H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:0824H         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:0824H         LINE#         133
+  C:0826H         LINE#         134
+  C:0827H         LINE#         135
+  C:0828H         LINE#         136
+  C:082AH         LINE#         185
+  C:082DH         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        EX17
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0800H         PUBLIC        isr_intr_0
+  D:0080H         PUBLIC        P0
+  C:0812H         PUBLIC        isr_intr_1
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  B:0080H.0       PUBLIC        LED1
+  B:0080H.1       PUBLIC        LED2
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:0830H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0830H         LINE#         16
+  C:0830H         LINE#         17
+  C:0830H         LINE#         18
+  C:0832H         LINE#         19
+  C:0834H         LINE#         21
+  C:0836H         LINE#         22
+  C:0838H         LINE#         24
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/13/2018  21:24:45  PAGE 3
+
+
+  C:083AH         LINE#         25
+  -------         ENDPROC       MAIN
+  -------         PROC          ISR_INTR_0
+  C:0800H         LINE#         29
+  C:0802H         LINE#         31
+  C:080AH         LINE#         32
+  C:080CH         LINE#         33
+  C:080FH         LINE#         34
+  -------         ENDPROC       ISR_INTR_0
+  -------         PROC          ISR_INTR_1
+  C:0812H         LINE#         37
+  C:0814H         LINE#         39
+  C:081CH         LINE#         40
+  C:081EH         LINE#         41
+  C:0821H         LINE#         42
+  -------         ENDPROC       ISR_INTR_1
+  -------         ENDMOD        EX17
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 0045H BYTE ( 3%) *
+******************************************************************************
+
+Program Size: data=9.0 xdata=0 code=69
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

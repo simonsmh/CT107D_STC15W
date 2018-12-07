@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"i2c.obj",
+"ex11.obj" 
+TO "DAC" 
+RAMSIZE(256) 

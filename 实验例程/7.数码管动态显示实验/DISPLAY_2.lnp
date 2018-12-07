@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"ex7.obj" 
+TO "DISPLAY_2" 
+RAMSIZE(256) 

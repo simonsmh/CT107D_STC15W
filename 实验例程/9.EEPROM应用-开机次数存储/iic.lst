@@ -1,0 +1,57 @@
+C51 COMPILER V6.10  IIC                                                                    03/03/2017 21:04:30 PAGE 1   
+
+
+C51 COMPILER V6.10, COMPILATION OF MODULE IIC
+OBJECT MODULE PLACED IN .\iic.obj
+COMPILER INVOKED BY: F:\51单片机工程软件\C51\BIN\C51.EXE ..\..\竞赛给出的驱动（往届）\竞赛给出的驱动\iic.c BROWSE DEFINE
+                    -(EEPROM_AT24C02) DEBUG OBJECTEXTEND PRINT(.\iic.lst) OBJECT(.\iic.obj) 
+
+stmt level    source
+
+*** ERROR C202 IN LINE 13 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 14 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 15 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 16 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 17 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 18 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 24 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 25 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 26 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 27 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 35 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 39 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 41 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 42 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 43 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 44 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 45 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 46 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 52 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 53 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 54 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 55 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 56 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 58 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 64 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 77 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 81 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 83 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 84 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 86 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 87 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 99 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 100 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 102 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SDA': undefined identifier
+*** ERROR C202 IN LINE 104 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'SCL': undefined identifier
+*** ERROR C202 IN LINE 105 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'somenop': undefined identifier
+*** ERROR C202 IN LINE 118 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'I2C_SCL': undefined identifier
+*** WARNING C206 IN LINE 119 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'I2C_Delay': missing function-prototype
+*** ERROR C202 IN LINE 121 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'I2C_SDA': undefined identifier
+*** ERROR C202 IN LINE 123 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'I2C_SCL': undefined identifier
+*** WARNING C206 IN LINE 139 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'operate_delay': missing function-proto
+             -type
+*** ERROR C267 IN LINE 139 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'operate_delay': requires ANSI-style prot
+             -otype
+*** ERROR C231 IN LINE 161 OF ..\..\竞赛给出的嵌ㄍ欤‐竞赛给出的嵌痋IIC.C: 'operate_delay': redefinition
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  41 ERROR(S)

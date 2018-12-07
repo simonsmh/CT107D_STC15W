@@ -1,0 +1,219 @@
+BL51 BANKED LINKER/LOCATER V4.03                                                        02/09/2017  15:15:16  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V4.03, INVOKED BY:
+F:\51单片机工程软件\C51\BIN\BL51.EXE STARTUP.obj, ex7.obj TO DISPLAY_2 RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  ex7.obj (EX7)
+  F:\51单片机工程软件\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  DISPLAY_2 (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0009H     UNIT         ?DT?EX7
+            IDATA   0011H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     0008H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     008CH     UNIT         ?C_C51STARTUP
+            CODE    009AH     0041H     UNIT         ?PR?ISR_TIMER_0?EX7
+            CODE    00DBH     0030H     UNIT         ?PR?DISPLAY?EX7
+            CODE    010BH     0011H     UNIT         ?PR?MAIN?EX7
+            CODE    011CH     000EH     UNIT         ?C_INITSEG
+            CODE    012AH     000AH     UNIT         ?CO?EX7
+
+
+
+OVERLAY MAP OF MODULE:   DISPLAY_2 (?C_STARTUP)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?EX7
+  +--> ?C_INITSEG
+
+*** NEW ROOT ***************************************************
+
+?PR?ISR_TIMER_0?EX7
+  +--> ?PR?DISPLAY?EX7
+
+?PR?DISPLAY?EX7
+  +--> ?CO?EX7
+
+
+
+SYMBOL TABLE OF MODULE:  DISPLAY_2 (?C_STARTUP)
+BL51 BANKED LINKER/LOCATER V4.03                                                      02/09/2017  15:15:16  PAGE 2
+
+
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:000EH         SEGMENT       ?C_C51STARTUP
+  I:0011H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:0011H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:000EH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:000EH         LINE#         133
+  C:0010H         LINE#         134
+  C:0011H         LINE#         135
+  C:0012H         LINE#         136
+  C:0014H         LINE#         185
+  C:0017H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        EX7
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00B0H.4       PUBLIC        T0
+  B:00D0H.6       PUBLIC        AC
+  B:00B0H.5       PUBLIC        T1
+  B:0090H.0       PUBLIC        T2
+  B:00A8H.7       PUBLIC        EA
+  D:0008H         PUBLIC        dspbuf
+  D:0010H         PUBLIC        dspcom
+  D:00A8H         PUBLIC        IE
+  B:00C8H.6       PUBLIC        EXF2
+  B:00B0H.7       PUBLIC        RD
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:00B0H.2       PUBLIC        INT0
+  B:00D0H.7       PUBLIC        CY
+BL51 BANKED LINKER/LOCATER V4.03                                                      02/09/2017  15:15:16  PAGE 3
+
+
+  B:0098H.1       PUBLIC        TI
+  B:00B0H.3       PUBLIC        INT1
+  B:00B8H.4       PUBLIC        PS
+  B:0090H.1       PUBLIC        T2EX
+  B:00D0H.2       PUBLIC        OV
+  C:010BH         PUBLIC        main
+  B:00C8H.1       PUBLIC        C_T2
+  B:00B0H.6       PUBLIC        WR
+  B:00C8H.5       PUBLIC        RCLK
+  B:00C8H.4       PUBLIC        TCLK
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:012AH         PUBLIC        tab
+  B:0088H.1       PUBLIC        IE0
+  B:0088H.3       PUBLIC        IE1
+  B:00C8H.0       PUBLIC        CP_RL2
+  B:00A8H.1       PUBLIC        ET0
+  B:00A8H.3       PUBLIC        ET1
+  B:0088H.5       PUBLIC        TF0
+  B:00A8H.5       PUBLIC        ET2
+  B:0088H.7       PUBLIC        TF1
+  B:00C8H.7       PUBLIC        TF2
+  B:0098H.2       PUBLIC        RB8
+  D:008CH         PUBLIC        TH0
+  B:00A8H.0       PUBLIC        EX0
+  B:0088H.0       PUBLIC        IT0
+  B:0098H.3       PUBLIC        TB8
+  B:00A8H.2       PUBLIC        EX1
+  B:0088H.2       PUBLIC        IT1
+  B:00D0H.0       PUBLIC        P
+  B:0098H.7       PUBLIC        SM0
+  D:008AH         PUBLIC        TL0
+  B:0098H.6       PUBLIC        SM1
+  B:0098H.5       PUBLIC        SM2
+  B:00B8H.1       PUBLIC        PT0
+  B:00B8H.3       PUBLIC        PT1
+  B:00D0H.3       PUBLIC        RS0
+  B:00B8H.5       PUBLIC        PT2
+  B:0088H.4       PUBLIC        TR0
+  B:00D0H.4       PUBLIC        RS1
+  B:0088H.6       PUBLIC        TR1
+  B:00C8H.2       PUBLIC        TR2
+  B:00B8H.0       PUBLIC        PX0
+  B:00B8H.2       PUBLIC        PX1
+  B:00C8H.3       PUBLIC        EXEN2
+  C:009AH         PUBLIC        isr_timer_0
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  B:00B0H.0       PUBLIC        RXD
+  B:00B0H.1       PUBLIC        TXD
+  B:00D0H.5       PUBLIC        F0
+  C:00DBH         PUBLIC        display
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:010BH         LINE#         20
+  C:010BH         LINE#         21
+BL51 BANKED LINKER/LOCATER V4.03                                                      02/09/2017  15:15:16  PAGE 4
+
+
+  C:010BH         LINE#         22
+  C:010EH         LINE#         23
+  C:0111H         LINE#         24
+  C:0114H         LINE#         25
+  C:0116H         LINE#         26
+  C:0118H         LINE#         27
+  C:011AH         LINE#         29
+  C:011AH         LINE#         30
+  C:011AH         LINE#         33
+  -------         ENDPROC       MAIN
+  -------         PROC          ISR_TIMER_0
+  C:009AH         LINE#         37
+  C:00B7H         LINE#         39
+  C:00BAH         LINE#         40
+  C:00BDH         LINE#         42
+  C:00C0H         LINE#         43
+  -------         ENDPROC       ISR_TIMER_0
+  -------         PROC          DISPLAY
+  C:00DBH         LINE#         46
+  C:00DBH         LINE#         47
+  C:00DBH         LINE#         48
+  C:00E1H         LINE#         50
+  C:00F2H         LINE#         51
+  C:0100H         LINE#         53
+  C:0107H         LINE#         54
+  C:010AH         LINE#         55
+  C:010AH         LINE#         56
+  -------         ENDPROC       DISPLAY
+  -------         ENDMOD        EX7
+
+******************************************************************************
+* RESTRICTED VERSION WITH 1000H BYTE CODE SIZE LIMIT; USED: 012CH BYTE ( 7%) *
+******************************************************************************
+
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

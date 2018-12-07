@@ -1,0 +1,17 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+D:\蓝桥杯资料\实验例程\12.DS18B20实验\DS18B20_1.uvproj
+Project File Date:  02/04/2015
+
+<h2>Output:</h2>
+Build target 'Target 1'
+assembling STARTUP.A51...
+compiling ex12.c...
+compiling onewire.c...
+linking...
+Program Size: data=20.2 xdata=0 code=545
+creating hex file from "DS18B20_1"...
+"DS18B20_1" - 0 Error(s), 0 Warning(s).

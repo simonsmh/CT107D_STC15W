@@ -1,0 +1,65 @@
+C51 COMPILER V9.02   EX17                                                                  05/13/2018 21:24:44 PAGE 1   
+
+
+C51 COMPILER V9.02, COMPILATION OF MODULE EX17
+OBJECT MODULE PLACED IN ex17.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE ex17.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：外部中断实验
+   3          * 实验目的：1.掌握51单片机外部中断相关寄存器的配置方法和触发方式
+   4          *           2.掌握keil uVision 环境下外部中断服务函数的设计方法
+   5          * 程序说明：1.使用程序前，将跳线J2调整为BTN模式
+   6          *           2.按下P3.2-INT0引脚对应的按键S5，LED1状态反转
+   7          *           3.按下P3.3-INT1引脚对应的按键S4, LED2状态反转
+   8          * 日期版本：2012-9-6/V1.0a 
+   9          *******************************************************************************/
+  10          
+  11          #include "reg52.h"  //定义51单片机特殊功能寄存器
+  12          
+  13          sbit LED1 = P0^0;
+  14          sbit LED2 = P0^1;
+  15          
+  16          void main(void)
+  17          {
+  18   1          EX0 = 1;
+  19   1          IT0 = 1;  //边沿触发方式(下降沿)
+  20   1      
+  21   1          EX1 = 1;
+  22   1          IT1 = 1;  //边沿触发方式(下降沿)
+  23   1              
+  24   1          EA = 1;  //开启总中断
+  25   1          while(1);
+  26   1      }
+  27          
+  28          //外部中断0中断服务函数
+  29          void isr_intr_0(void) interrupt 0
+  30          {
+  31   1              P2 = ((P2&0x1f)|0x80);
+  32   1          LED1 = ~LED1;    
+  33   1              P2 = P2&0x1f;
+  34   1      }
+  35                                  
+  36          //外部中断1中断服务函数
+  37          void isr_intr_1(void) interrupt 2
+  38          {
+  39   1              P2 = ((P2&0x1f)|0x80);
+  40   1          LED2 = ~LED2;    
+  41   1              P2 = P2&0x1f;
+  42   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     48    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

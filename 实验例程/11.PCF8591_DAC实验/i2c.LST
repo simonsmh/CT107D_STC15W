@@ -1,0 +1,289 @@
+C51 COMPILER V6.10  I2C                                                                    03/12/2017 11:11:53 PAGE 1   
+
+
+C51 COMPILER V6.10, COMPILATION OF MODULE I2C
+OBJECT MODULE PLACED IN i2c.OBJ
+COMPILER INVOKED BY: F:\51单片机工程软件\C51\BIN\C51.EXE i2c.c BROWSE DEFINE(DAC_PCF8591) DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          #include "reg52.h"
+   2          #include "intrins.h"
+   3          
+   4          #define DELAY_TIME 5
+   5          
+   6          /** 定义I2C总线时钟线和数据线 */
+   7          sbit scl = P2^0;
+   8          sbit sda = P2^1;
+   9          
+  10          /**
+  11          * @brief I2C总线中一些必要的延时
+  12          *
+  13          * @param[in] i - 延时时间调整.
+  14          * @return none
+  15          */
+  16          void i2c_delay(unsigned char i)
+  17          {
+  18   1          do
+  19   1          {
+  20   2              _nop_();
+  21   2          }
+  22   1          while(i--);        
+  23   1      }
+  24          
+  25          /**
+  26          * @brief 产生I2C总线启动条件.
+  27          *
+  28          * @param[in] none
+  29          * @param[out] none
+  30          * @return none
+  31          */
+  32          void i2c_start(void)
+  33          {
+  34   1          sda = 1;
+  35   1          scl = 1;
+  36   1          i2c_delay(DELAY_TIME);
+  37   1          sda = 0;
+  38   1          i2c_delay(DELAY_TIME);
+  39   1          scl = 0;    
+  40   1      }
+  41          
+  42          /**
+  43          * @brief 产生I2C总线停止条件
+  44          *
+  45          * @param[in] none
+  46          * @param[out] none.
+  47          * @return none
+  48          */
+  49          void i2c_stop(void)
+  50          {
+  51   1          sda = 0;
+  52   1          scl = 1;
+  53   1          i2c_delay(DELAY_TIME);
+  54   1          sda = 1;
+  55   1          i2c_delay(DELAY_TIME);       
+C51 COMPILER V6.10  I2C                                                                    03/12/2017 11:11:53 PAGE 2   
+
+  56   1      }
+  57          
+  58          /**
+  59          * @brief I2C发送一个字节的数据
+  60          *
+  61          * @param[in] byt - 待发送的字节
+  62          * @return none
+  63          */
+  64          void i2c_sendbyte(unsigned char byt)
+  65          {
+  66   1          unsigned char i;
+  67   1      //
+  68   1      	EA = 0;
+  69   1          for(i=0; i<8; i++){
+  70   2              scl = 0;
+  71   2              i2c_delay(DELAY_TIME);
+  72   2              if(byt & 0x80){
+  73   3                  sda = 1;
+  74   3              }
+  75   2              else{
+  76   3                  sda = 0;
+  77   3              }
+  78   2              i2c_delay(DELAY_TIME);
+  79   2              scl = 1;
+  80   2              byt <<= 1;
+  81   2              i2c_delay(DELAY_TIME);
+  82   2          }
+  83   1      	EA = 1;
+  84   1      //
+  85   1          scl = 0;  
+  86   1      }
+  87          
+  88          /**
+  89          * @brief 等待应答
+  90          *
+  91          * @param[in] none
+  92          * @param[out] none
+  93          * @return none
+  94          */
+  95          unsigned char i2c_waitack(void)
+  96          {
+  97   1      	unsigned char ackbit;
+  98   1      	
+  99   1          scl = 1;
+ 100   1          i2c_delay(DELAY_TIME);
+ 101   1          ackbit = sda; //while(sda);  //wait ack
+ 102   1          scl = 0;
+ 103   1          i2c_delay(DELAY_TIME);
+ 104   1      	
+ 105   1      	return ackbit;
+ 106   1      }
+ 107          
+ 108          /**
+ 109          * @brief I2C接收一个字节数据
+ 110          *
+ 111          * @param[in] none
+ 112          * @param[out] da
+ 113          * @return da - 从I2C总线上接收到得数据
+ 114          */
+ 115          // unsigned char i2c_receivebyte(void)
+ 116          // {
+ 117          // 	unsigned char da;
+C51 COMPILER V6.10  I2C                                                                    03/12/2017 11:11:53 PAGE 3   
+
+ 118          // 	unsigned char i;
+ 119          // //
+ 120          // 	EA = 0;	
+ 121          // 	for(i=0;i<8;i++){   
+ 122          // 		scl = 1;
+ 123          // 		i2c_delay(DELAY_TIME);
+ 124          // 		da <<= 1;
+ 125          // 		if(sda) 
+ 126          // 			da |= 0x01;
+ 127          // 		scl = 0;
+ 128          // 		i2c_delay(DELAY_TIME);
+ 129          // 	}
+ 130          // 	EA = 1;
+ 131          // //
+ 132          // 	return da;    
+ 133          // }
+ 134          
+ 135          /**
+ 136          * @brief 发送应答
+ 137          *
+ 138          * @param[in] ackbit - 设定是否发送应答
+ 139          * @return - none
+ 140          */
+ 141          // void i2c_sendack(unsigned char ackbit)
+ 142          // {
+ 143          //     scl = 0;
+ 144          //     sda = ackbit;  //0：发送应答信号；1：发送非应答信号
+ 145          //     i2c_delay(DELAY_TIME);
+ 146          //     scl = 1;
+ 147          //     i2c_delay(DELAY_TIME);
+ 148          //     scl = 0; 
+ 149          // 	sda = 1;
+ 150          //     i2c_delay(DELAY_TIME);
+ 151          // }
+ 152          
+ 153          /**
+ 154          * @brief 读写操作过程中一些必要的延时
+ 155          *
+ 156          * @param[in] i - 指定延时时间
+ 157          * @return - none
+ 158          */
+ 159          // void operate_delay(unsigned char t)
+ 160          // {
+ 161          // 	unsigned char i;
+ 162          // 	
+ 163          // 	while(t--){
+ 164          // 		for(i=0; i<112; i++);
+ 165          // 	}
+ 166          // }
+ 167          
+ 168          #ifdef EEPROM_AT24C02 /** EEPROM AT24C02操作函数 */
+              
+              /**
+              * @brief 向AT24C02(add)中写入数据val
+              *
+              * @param[in] add - AT24C02存储地址
+              * @param[in] val - 待写入AT24C02相应地址的数据
+              * @return - none
+              */
+              void write_eeprom(unsigned char add,unsigned char val)
+              {
+                  i2c_start();
+C51 COMPILER V6.10  I2C                                                                    03/12/2017 11:11:53 PAGE 4   
+
+                  i2c_sendbyte(0xa0);
+                  i2c_waitack();
+                  i2c_sendbyte(add);
+                  i2c_waitack();
+                  i2c_sendbyte(val);
+                  i2c_waitack();
+                  i2c_stop();
+              	operate_delay(10);
+              }
+              
+              /**
+              * @brief 从AT24C02(add)中读出数据da
+              *
+              * @param[in] add - AT24C02存储地址
+              * @param[out] da - 从AT24C02相应地址中读取到的数据
+              * @return - da
+              */
+              unsigned char read_eeprom(unsigned char add)
+              {
+              	unsigned char da;
+                
+              	i2c_start();
+              	i2c_sendbyte(0xa0);
+              	i2c_waitack();
+              	i2c_sendbyte(add);
+              	i2c_waitack();
+              	i2c_start();
+              	i2c_sendbyte(0xa1);
+              	i2c_waitack();
+              	da = i2c_receivebyte();
+              	i2c_sendack(0); 
+              	i2c_stop();
+              	
+              	return da;
+              }
+              
+              #endif
+ 217          
+ 218          #ifdef DAC_PCF8591  /**  ADC芯片PCF8591操作函数  */
+ 219          
+ 220          /**
+ 221          * @brief PCF8591初始化
+ 222          *
+ 223          * @param[in] none
+ 224          * @param[out] none
+ 225          * @return none
+ 226          */
+ 227          // void init_pcf8591(void)
+ 228          // {
+ 229          // 	i2c_start();
+ 230          // 	i2c_sendbyte(0x90);
+ 231          // 	i2c_waitack();
+ 232          // 	i2c_sendbyte(0x03);  //DAC输出模式
+ 233          // 	i2c_waitack();
+ 234          // 	i2c_stop();
+ 235          // 	operate_delay(10);
+ 236          // }
+ 237          
+ 238          /**
+ 239          * @brief DAC输出
+ 240          *
+ 241          * @param[in] dat - 输入进行数模转换的数据
+C51 COMPILER V6.10  I2C                                                                    03/12/2017 11:11:53 PAGE 5   
+
+ 242          * @param[out] none 
+ 243          * @return - temp
+ 244          */
+ 245          void dac_pcf8591(unsigned char dat)
+ 246          {
+ 247   1      	i2c_start();
+ 248   1      	i2c_sendbyte(0x90);
+ 249   1      	i2c_waitack();
+ 250   1      	i2c_sendbyte(0x40);  //DAC输出模式
+ 251   1      	i2c_waitack();
+ 252   1      	
+ 253   1      	i2c_sendbyte(dat);
+ 254   1      	i2c_waitack();
+ 255   1      	i2c_stop();
+ 256   1      }
+ 257          
+ 258          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    134    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

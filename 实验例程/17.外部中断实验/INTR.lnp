@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"ex17.obj" 
+TO "INTR" 
+RAMSIZE(256) 

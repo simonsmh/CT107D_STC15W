@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"ex9.obj",
+"i2c.obj" 
+TO "EEPROM_1" 
+RAMSIZE(256) 

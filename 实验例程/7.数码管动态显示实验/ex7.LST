@@ -1,0 +1,81 @@
+C51 COMPILER V6.10  EX7                                                                    02/09/2017 15:15:15 PAGE 1   
+
+
+C51 COMPILER V6.10, COMPILATION OF MODULE EX7
+OBJECT MODULE PLACED IN ex7.OBJ
+COMPILER INVOKED BY: F:\51单片机工程软件\C51\BIN\C51.EXE ex7.c BROWSE DEBUG OBJECTEXTEND
+
+stmt level    source
+
+   1          /*******************************************************************************  
+   2          * 文件名称：数码管控制实验
+   3          * 实验目的：1.掌握数码管动态扫描的基本原理,掌握数码管消除“鬼影”的方法
+   4          *           2.掌握51单片机定时器工作模式和配置方法
+   5          *           3.掌握keil uvision集成开发环境下，中断服务函数设计方法
+   6          * 程序说明：无
+   7          * 日期版本：2012-9-4/V1.0a 
+   8          *******************************************************************************/
+   9          
+  10          #include "reg52.h"  //定义51单片机特殊功能寄存器
+  11          #include "absacc.h"
+  12                                     //  0    1    2    3    4    5    6    7    8    9
+  13          code unsigned char tab[] = { 0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+  14          unsigned char dspbuf[8] = {1,2,3,4,5,6,7,8};  //显示缓冲区
+  15          unsigned char dspcom = 0;
+  16          
+  17          void display(void);
+  18          
+  19          //主函数
+  20          void main(void)
+  21          { 
+  22   1          TMOD |= 0x01;  //配置定时器工作模式
+  23   1          TH0 = (65536-2000)/256;
+  24   1          TL0 = (65536-2000)%256;  
+  25   1          EA = 1;
+  26   1          ET0 = 1;  //打开定时器中断
+  27   1          TR0 = 1;  //启动定时器
+  28   1          
+  29   1          while(1)
+  30   1          {
+  31   2      		//更新数据缓冲区
+  32   2      		;
+  33   2          }
+  34   1      }
+  35          
+  36          //定时器中断服务函数
+  37          void isr_timer_0(void)  interrupt 1  //默认中断优先级 1
+  38          {
+  39   1          TH0 = (65536-2000)/256;
+  40   1          TL0 = (65536-2000)%256;  //定时器重载 
+  41   1           
+  42   1      	display();  //2ms执行一次
+  43   1      }
+  44          
+  45          //显示函数
+  46          void display(void)
+  47          {   
+  48   1      	XBYTE[0xE000] = 0xff;  //消隐
+  49   1      	
+  50   1      	XBYTE[0xC000] = (1<<dspcom);
+  51   1          XBYTE[0xE000] = tab[dspbuf[dspcom]]; //段码
+  52   1         
+  53   1          if(++dspcom == 8){
+  54   2              dspcom = 0;
+  55   2          }   
+C51 COMPILER V6.10  EX7                                                                    02/09/2017 15:15:15 PAGE 2   
+
+  56   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    130    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      9    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

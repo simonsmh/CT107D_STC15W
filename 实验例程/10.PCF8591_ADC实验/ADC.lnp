@@ -1,0 +1,5 @@
+"STARTUP.obj",
+"i2c.obj",
+"ex10.obj" 
+TO "ADC" 
+RAMSIZE(256) 
